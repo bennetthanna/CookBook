@@ -53,9 +53,8 @@ public class RecipeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-//            Intent intent = RecipeActivity.newIntent(getActivity(), mRecipe.getId());
-//            startActivity(intent);
-            Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = RecipePagerActivity.newIntent(getActivity(), mRecipe.getId());
+            startActivity(intent);
         }
     }
 
