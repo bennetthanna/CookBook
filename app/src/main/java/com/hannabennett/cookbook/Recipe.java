@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Recipe {
     private UUID mId;
     private String mTitle;
-    private List<String> mIngredients;
+    private List<Ingredient> mIngredients;
     private int mRating;
 
     public Recipe() {
@@ -35,11 +35,11 @@ public class Recipe {
         mTitle = title;
     }
 
-    public List<String> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return mIngredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         mIngredients = ingredients;
     }
 
@@ -51,7 +51,7 @@ public class Recipe {
         mRating = rating;
     }
 
-    public void addIngredient(String ingredient) {
+    public void addIngredient(Ingredient ingredient) {
         mIngredients.add(ingredient);
     }
 }
