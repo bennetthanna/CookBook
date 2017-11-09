@@ -33,7 +33,6 @@ public class RecipeFragment extends Fragment {
 
     private Recipe mRecipe;
     private LinearLayout mLayout;
-    private LinearLayout mIndividualIngredientLayout;
     private EditText mTitleField;
     private EditText mIngredientField;
     private RatingBar mRatingBar;
@@ -42,6 +41,8 @@ public class RecipeFragment extends Fragment {
     private ImageView mPhotoView;
     private Spinner mIngredientMeasurementSpinner;
     private Spinner mIngredientQuantitySpinner;
+    private String mQuantity;
+    private String mMeasurement;
 
     public static RecipeFragment newInstance(UUID recipeId) {
         Bundle args = new Bundle();
@@ -87,12 +88,9 @@ public class RecipeFragment extends Fragment {
         mPhotoView = (ImageView) view.findViewById(R.id.recipe_photo);
 
         mLayout = (LinearLayout) view.findViewById(R.id.layout);
-        mIndividualIngredientLayout = (LinearLayout) view.findViewById(R.id.individual_ingredient_layout);
         if (mRecipe.getIngredients() != null) {
             for (Ingredient ingredient : mRecipe.getIngredients()) {
-                mIndividualIngredientLayout.addView(createNewTextView(ingredient.getQuantity()));
-                mIndividualIngredientLayout.addView(createNewTextView(ingredient.getMeasurement()));
-                mIndividualIngredientLayout.addView(createNewTextView(ingredient.getItem()));
+                mLayout.addView(createIngredientTextView(ingredient));
             }
         }
 
@@ -100,9 +98,7 @@ public class RecipeFragment extends Fragment {
         mIngredientQuantitySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(adapterView.getContext(),
-                        "You chose : " + adapterView.getItemAtPosition(i).toString(),
-                        Toast.LENGTH_SHORT).show();
+                mQuantity = adapterView.getItemAtPosition(i).toString();
             }
 
             @Override
@@ -119,9 +115,7 @@ public class RecipeFragment extends Fragment {
         mIngredientMeasurementSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(adapterView.getContext(),
-                        "You chose : " + adapterView.getItemAtPosition(i).toString(),
-                        Toast.LENGTH_SHORT).show();
+                mMeasurement = adapterView.getItemAtPosition(i).toString();
             }
 
             @Override
@@ -142,8 +136,9 @@ public class RecipeFragment extends Fragment {
                 if (mIngredientField.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Enter an ingredient", Toast.LENGTH_SHORT).show();
                 } else {
-                    mLayout.addView(createNewTextView(mIngredientField.getText().toString()));
-//                    mRecipe.addIngredient(mIngredientField.getText().toString());
+                    Ingredient i = new Ingredient(mIngredientField.getText().toString(), mQuantity, mMeasurement);
+                    mRecipe.addIngredient(i);
+                    mLayout.addView(createIngredientTextView(i));
                     mIngredientField.setText("");
                 }
             }
@@ -151,12 +146,12 @@ public class RecipeFragment extends Fragment {
         return view;
     }
 
-    private TextView createNewTextView(String text) {
+    private TextView createIngredientTextView(Ingredient i) {
         final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        params.setMarginEnd(20);
         final TextView textView = new TextView(getActivity());
         textView.setLayoutParams(params);
-        textView.setText(text);
+        textView.setText(i.getQuantity() + "  " + i.getMeasurement() + "  " + i.getItem());
         return textView;
     }
+
 }
