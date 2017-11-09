@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.UUID;
 
@@ -78,13 +79,22 @@ public class RecipeFragment extends Fragment {
         mPhotoView = (ImageView) view.findViewById(R.id.recipe_photo);
 
         mLayout = (LinearLayout) view.findViewById(R.id.layout);
+        if (mRecipe.getIngredients() != null) {
+            for (String ingredient : mRecipe.getIngredients()) {
+                mLayout.addView(createNewTextView(ingredient));
+            }
+        }
         mIngredientField = (EditText) view.findViewById(R.id.recipe_ingredient_edit_text);
         mAddIngredientButton = (Button) view.findViewById(R.id.recipe_add_ingredient);
         mAddIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLayout.addView(createNewTextView(mIngredientField.getText().toString()));
-                mIngredientField.setText("");
+                if (mIngredientField.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Enter an ingredient", Toast.LENGTH_SHORT).show();
+                } else {
+                    mLayout.addView(createNewTextView(mIngredientField.getText().toString()));
+                    mIngredientField.setText("");
+                }
             }
         });
         return view;
@@ -93,6 +103,7 @@ public class RecipeFragment extends Fragment {
     private TextView createNewTextView(String text) {
         final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         final TextView textView = new TextView(getActivity());
+//        mRecipe.addIngredient(text);
         textView.setLayoutParams(params);
         textView.setText(text);
         return textView;

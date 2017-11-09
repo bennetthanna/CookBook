@@ -26,6 +26,7 @@ public class Cookbook {
         for (int i = 0; i < 10; i++) {
             Recipe recipe = new Recipe();
             recipe.setTitle("Recipe #" + i);
+            recipe.addIngredient("BUTTAH");
             mRecipes.add(recipe);
         }
     }

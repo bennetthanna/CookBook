@@ -1,5 +1,7 @@
 package com.hannabennett.cookbook;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -9,11 +11,12 @@ import java.util.UUID;
 public class Recipe {
     private UUID mId;
     private String mTitle;
-    private String[] mIngredients;
+    private List<String> mIngredients;
     private int mRating;
 
     public Recipe() {
         this(UUID.randomUUID());
+        mIngredients = new ArrayList<>();
     }
 
     public Recipe(UUID id) {
@@ -32,11 +35,11 @@ public class Recipe {
         mTitle = title;
     }
 
-    public String[] getIngredients() {
+    public List<String> getIngredients() {
         return mIngredients;
     }
 
-    public void setIngredients(String[] ingredients) {
+    public void setIngredients(List<String> ingredients) {
         mIngredients = ingredients;
     }
 
@@ -46,5 +49,9 @@ public class Recipe {
 
     public void setRating(int rating) {
         mRating = rating;
+    }
+
+    public void addIngredient(String ingredient) {
+        mIngredients.add(ingredient);
     }
 }
