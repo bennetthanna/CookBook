@@ -93,6 +93,7 @@ public class RecipeFragment extends Fragment {
                     Toast.makeText(getActivity(), "Enter an ingredient", Toast.LENGTH_SHORT).show();
                 } else {
                     mLayout.addView(createNewTextView(mIngredientField.getText().toString()));
+                    mRecipe.addIngredient(mIngredientField.getText().toString());
                     mIngredientField.setText("");
                 }
             }
@@ -103,7 +104,6 @@ public class RecipeFragment extends Fragment {
     private TextView createNewTextView(String text) {
         final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         final TextView textView = new TextView(getActivity());
-//        mRecipe.addIngredient(text);
         textView.setLayoutParams(params);
         textView.setText(text);
         return textView;
