@@ -8,4 +8,20 @@
     <string name="recipe_ingredients_label">Ingredients</string>
     <string name="recipe_add_ingredient">Add Ingredient</string>
     <string name="recipe_ingredient_hint">Enter recipe ingredient</string>
+    <string-array name="fractions_array">
+        <item>1/8</item>
+        <item>1/4</item>
+        <item>1/2</item>
+        <item>3/4</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="measurement_array">
+        <item>tsp</item>
+        <item>tbsp</item>
+        <item>cup</item>
+        <item>ounce</item>
+        <item>pound</item>
+        <item>ml</item>
+        <item>liter</item>
+    </string-array>
 </resources>

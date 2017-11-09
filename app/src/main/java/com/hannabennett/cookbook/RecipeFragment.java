@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ public class RecipeFragment extends Fragment {
     private Button mAddIngredientButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
+    private Spinner mIngredientMeasurementSpinner;
+    private Spinner mIngredientQuantitySpinner;
 
     public static RecipeFragment newInstance(UUID recipeId) {
         Bundle args = new Bundle();
@@ -84,6 +88,19 @@ public class RecipeFragment extends Fragment {
                 mLayout.addView(createNewTextView(ingredient));
             }
         }
+
+        mIngredientQuantitySpinner = (Spinner) view.findViewById(R.id.ingredient_quantity);
+        ArrayAdapter<CharSequence> fractionAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.fractions_array, android.R.layout.simple_spinner_item);
+        fractionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mIngredientQuantitySpinner.setAdapter(fractionAdapter);
+
+        mIngredientMeasurementSpinner = (Spinner) view.findViewById(R.id.ingredient_measurement);
+        ArrayAdapter<CharSequence> measurementAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.measurement_array, android.R.layout.simple_spinner_item);
+        measurementAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mIngredientMeasurementSpinner.setAdapter(measurementAdapter);
+
         mIngredientField = (EditText) view.findViewById(R.id.recipe_ingredient_edit_text);
         mAddIngredientButton = (Button) view.findViewById(R.id.recipe_add_ingredient);
         mAddIngredientButton.setOnClickListener(new View.OnClickListener() {
