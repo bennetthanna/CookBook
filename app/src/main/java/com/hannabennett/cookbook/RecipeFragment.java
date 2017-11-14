@@ -1,10 +1,16 @@
 package com.hannabennett.cookbook;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,6 +36,8 @@ import static android.widget.AdapterView.*;
 
 public class RecipeFragment extends Fragment {
     private static final String ARG_RECIPE_ID = "recipe_id";
+    private static final int REQUEST_DECISION = 0;
+    private static final String DIALOG_DELETE_RECIPE = "DialogDeleteRecipe";
 
     private Recipe mRecipe;
     private LinearLayout mLayout;
@@ -56,9 +64,45 @@ public class RecipeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         UUID recipeId = (UUID) getArguments().getSerializable(ARG_RECIPE_ID);
         mRecipe = Cookbook.getInstance(getActivity()).getRecipe(recipeId);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_recipe, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_recipe:
+                FragmentManager manager = getFragmentManager();
+                DeleteRecipeFragment dialog = new DeleteRecipeFragment();
+                dialog.setTargetFragment(RecipeFragment.this, REQUEST_DECISION);
+                dialog.show(manager, DIALOG_DELETE_RECIPE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_DECISION) {
+            Cookbook cookbook = Cookbook.getInstance(getActivity());
+            Recipe recipe = cookbook.getRecipe(mRecipe.getId());
+            cookbook.deleteRecipe(recipe);
+            getActivity().finish();
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

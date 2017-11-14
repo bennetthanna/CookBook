@@ -36,6 +36,10 @@ public class Cookbook {
         mRecipes.add(recipe);
     }
 
+    public void deleteRecipe(Recipe recipe) {
+        mRecipes.remove(recipe);
+    }
+
     public List<Recipe> getRecipes() {
         return mRecipes;
     }
