@@ -40,6 +40,10 @@ public class Cookbook {
         mRecipes.remove(recipe);
     }
 
+    public int getNumRecipes() {
+        return mRecipes.size();
+    }
+
     public List<Recipe> getRecipes() {
         return mRecipes;
     }

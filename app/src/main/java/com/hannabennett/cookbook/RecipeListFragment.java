@@ -3,6 +3,7 @@ package com.hannabennett.cookbook;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,6 +40,14 @@ public class RecipeListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+    }
+
+    private void updateSubtitle() {
+        Cookbook cookbook = Cookbook.getInstance(getActivity());
+        int numRecipes = cookbook.getNumRecipes();
+        String subtitle = getString(R.string.subtitle_format, numRecipes);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.getSupportActionBar().setSubtitle(subtitle);
     }
 
     private class RecipeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -96,5 +105,6 @@ public class RecipeListFragment extends Fragment {
 
         mAdapter = new RecipeAdapter(recipes);
         mRecipeRecyclerView.setAdapter(mAdapter);
+        updateSubtitle();
     }
 }
