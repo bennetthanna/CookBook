@@ -13,6 +13,7 @@
         Are you sure you want to delete this recipe?
         This action cannot be undone
     </string>
+    <string name="new_recipe">New Recipe</string>
     <string name="subtitle_format">%1$d recipes</string>
     <string-array name="fractions_array">
         <item>1/8</item>
