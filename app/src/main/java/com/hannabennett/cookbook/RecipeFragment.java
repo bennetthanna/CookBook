@@ -2,6 +2,7 @@ package com.hannabennett.cookbook;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -131,12 +132,14 @@ public class RecipeFragment extends Fragment {
         mPhotoButton = (ImageButton) view.findViewById(R.id.recipe_camera);
         mPhotoView = (ImageView) view.findViewById(R.id.recipe_photo);
 
-        mLayout = (LinearLayout) view.findViewById(R.id.layout);
-        if (mRecipe.getIngredients() != null) {
-            for (Ingredient ingredient : mRecipe.getIngredients()) {
-                mLayout.addView(createIngredientTextView(ingredient));
+        mRatingBar = (RatingBar) view.findViewById(R.id.recipe_rating);
+        mRatingBar.setRating(mRecipe.getRating());
+        mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                mRecipe.setRating(v);
             }
-        }
+        });
 
         mIngredientQuantitySpinner = (Spinner) view.findViewById(R.id.ingredient_quantity);
         mIngredientQuantitySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -172,13 +175,21 @@ public class RecipeFragment extends Fragment {
         measurementAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mIngredientMeasurementSpinner.setAdapter(measurementAdapter);
 
+        mLayout = (LinearLayout) view.findViewById(R.id.layout);
+        if (mRecipe.getIngredients() != null) {
+            for (Ingredient ingredient : mRecipe.getIngredients()) {
+                mLayout.addView(createIngredientTextView(ingredient));
+            }
+        }
+
         mIngredientField = (EditText) view.findViewById(R.id.recipe_ingredient_edit_text);
         mAddIngredientButton = (Button) view.findViewById(R.id.recipe_add_ingredient);
         mAddIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mIngredientField.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(), "Enter an ingredient", Toast.LENGTH_SHORT).show();
+                    String emptyIngredientToast = getString(R.string.empty_ingredient);
+                    Toast.makeText(getActivity(), emptyIngredientToast, Toast.LENGTH_SHORT).show();
                 } else {
                     Ingredient i = new Ingredient(mIngredientField.getText().toString(), mQuantity, mMeasurement);
                     mRecipe.addIngredient(i);

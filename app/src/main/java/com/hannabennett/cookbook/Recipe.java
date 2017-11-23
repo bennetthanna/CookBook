@@ -12,7 +12,7 @@ public class Recipe {
     private UUID mId;
     private String mTitle;
     private List<Ingredient> mIngredients;
-    private int mRating;
+    private float mRating;
 
     public Recipe() {
         this(UUID.randomUUID());
@@ -43,11 +43,11 @@ public class Recipe {
         mIngredients = ingredients;
     }
 
-    public int getRating() {
+    public float getRating() {
         return mRating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         mRating = rating;
     }
 
