@@ -9,4 +9,11 @@
         app:showAsAction="ifRoom|withText"
         />
 
+    <item
+        android:id="@+id/share_recipe"
+        android:icon="@drawable/ic_menu_share"
+        android:title="@string/share_recipe"
+        app:showAsAction="ifRoom|withText"
+        />
+
 </menu>

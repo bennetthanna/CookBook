@@ -16,6 +16,7 @@
     <string name="new_recipe">New Recipe</string>
     <string name="empty_ingredient">Please enter an ingredient</string>
     <string name="subtitle_format">%1$d recipes</string>
+    <string name="share_recipe">Share Recipe</string>
     <string-array name="fractions_array">
         <item>1/8</item>
         <item>1/4</item>
