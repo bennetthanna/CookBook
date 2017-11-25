@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +27,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static android.widget.AdapterView.*;
@@ -84,9 +88,34 @@ public class RecipeFragment extends Fragment {
                 dialog.setTargetFragment(RecipeFragment.this, REQUEST_DECISION);
                 dialog.show(manager, DIALOG_DELETE_RECIPE);
                 return true;
+            case R.id.share_recipe:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getRecipeSummary());
+                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.recipe_summary_subject));
+                i = Intent.createChooser(i, getString(R.string.send_recipe));
+                startActivity(i);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private String getRecipeSummary() {
+        String recipeTitle = mRecipe.getTitle();
+
+        List<String> recipeIngredients = new ArrayList<>();
+        for (Ingredient i : mRecipe.getIngredients()) {
+            String ingredient = i.getQuantity() + " " + i.getMeasurement() +
+                    " " + i.getItem();
+            recipeIngredients.add(ingredient);
+        }
+
+        float recipeRating = mRecipe.getRating();
+
+        String recipeSummary = getString(R.string.recipe_summary, recipeTitle,
+                Arrays.toString(recipeIngredients.toArray(new String[0])), recipeRating);
+        return recipeSummary;
     }
 
     @Override

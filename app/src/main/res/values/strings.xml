@@ -33,4 +33,9 @@
         <item>ml</item>
         <item>liter</item>
     </string-array>
+    <string name="recipe_summary">
+        %1$s\nIngredients: %2$s\nRating: %3$f
+    </string>
+    <string name="recipe_summary_subject">Cookbook Recipe Summary</string>
+    <string name="send_recipe">Send recipe via</string>
 </resources>
