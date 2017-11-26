@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -229,16 +231,27 @@ public class RecipeFragment extends Fragment {
         return view;
     }
 
-    private LinearLayout createIngredientTextView(Ingredient i) {
-        final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        final LinearLayout linearLayout = new LinearLayout(getActivity());
+    private RelativeLayout createIngredientTextView(Ingredient i) {
+        final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        final RelativeLayout relativeLayout = new RelativeLayout(getActivity());
+        relativeLayout.setLayoutParams(params);
+        final Button editButton = new Button(getActivity());
+        final RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        editButton.setLayoutParams(buttonParams);
+        editButton.setText(R.string.edit);
+        editButton.setId(1);
+        relativeLayout.addView(editButton);
+        final Button deleteButton = new Button(getActivity());
+        final RelativeLayout.LayoutParams deleteButtonParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        deleteButtonParams.addRule(RelativeLayout.LEFT_OF, 1);
+        deleteButton.setLayoutParams(deleteButtonParams);
+        deleteButton.setText(R.string.delete);
+        relativeLayout.addView(deleteButton);
         final TextView textView = new TextView(getActivity());
-        final Button button = new Button(getActivity());
-        linearLayout.setLayoutParams(params);
         textView.setText(i.getQuantity() + "  " + i.getMeasurement() + "  " + i.getItem());
-        linearLayout.addView(textView);
-        linearLayout.addView(button);
-        return linearLayout;
+        relativeLayout.addView(textView);
+        return relativeLayout;
     }
 
 }
