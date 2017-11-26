@@ -229,12 +229,16 @@ public class RecipeFragment extends Fragment {
         return view;
     }
 
-    private TextView createIngredientTextView(Ingredient i) {
+    private LinearLayout createIngredientTextView(Ingredient i) {
         final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        final LinearLayout linearLayout = new LinearLayout(getActivity());
         final TextView textView = new TextView(getActivity());
-        textView.setLayoutParams(params);
+        final Button button = new Button(getActivity());
+        linearLayout.setLayoutParams(params);
         textView.setText(i.getQuantity() + "  " + i.getMeasurement() + "  " + i.getItem());
-        return textView;
+        linearLayout.addView(textView);
+        linearLayout.addView(button);
+        return linearLayout;
     }
 
 }
