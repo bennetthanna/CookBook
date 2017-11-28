@@ -40,4 +40,7 @@
     <string name="send_recipe">Send recipe via</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="sort_list">Sort List</string>
+    <string name="sort_alphabetically">Sort Alphabetically</string>
+    <string name="sort_rating">Sort By Rating</string>
 </resources>

@@ -9,4 +9,21 @@
         app:showAsAction="ifRoom|withText"
         />
 
+    <item
+        android:id="@+id/sort_list"
+        android:icon="@drawable/ic_menu_sort"
+        android:title="@string/sort_list"
+        app:showAsAction="ifRoom|withText">
+        <menu>
+            <item
+                android:id="@+id/sort_alphabetically"
+                android:title="@string/sort_alphabetically"
+                />
+            <item
+                android:id="@+id/sort_rating"
+                android:title="@string/sort_rating"
+                />
+        </menu>
+    </item>
+
 </menu>
