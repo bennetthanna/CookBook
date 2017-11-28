@@ -1,6 +1,8 @@
 package com.hannabennett.cookbook;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class RecipeListFragment extends Fragment {
@@ -63,6 +67,22 @@ public class RecipeListFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setupAdapter() {
+        Cookbook cookbook = Cookbook.getInstance(getActivity());
+        List<Recipe> recipes = cookbook.getRecipes();
+        Collections.sort(recipes, new Comparator<Recipe>() {
+            @Override
+            public int compare(Recipe a, Recipe b) {
+                return String.CASE_INSENSITIVE_ORDER.compare(
+                        a.getTitle(),
+                        b.getTitle()
+                );
+            }
+        });
+        mAdapter = new RecipeAdapter(recipes);
+        mRecipeRecyclerView.setAdapter(mAdapter);
     }
 
     private void updateSubtitle() {
@@ -126,8 +146,7 @@ public class RecipeListFragment extends Fragment {
         Cookbook cookbook = Cookbook.getInstance(getActivity());
         List<Recipe> recipes = cookbook.getRecipes();
 
-        mAdapter = new RecipeAdapter(recipes);
-        mRecipeRecyclerView.setAdapter(mAdapter);
+        setupAdapter();
         updateSubtitle();
     }
 }
