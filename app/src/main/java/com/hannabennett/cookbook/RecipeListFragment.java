@@ -1,8 +1,6 @@
 package com.hannabennett.cookbook;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -64,23 +62,46 @@ public class RecipeListFragment extends Fragment {
                 Intent intent = RecipePagerActivity.newIntent(getActivity(), recipe.getId());
                 startActivity(intent);
                 return true;
+            case R.id.sort_alphabetically:
+                sort(1);
+                updateUI();
+                return true;
+            case R.id.sort_rating:
+                sort(2);
+                updateUI();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void sort(int option) {
+        Cookbook cookbook = Cookbook.getInstance(getActivity());
+        List<Recipe> recipes = cookbook.getRecipes();
+        switch(option) {
+            case 1:
+                Collections.sort(recipes, new Comparator<Recipe>() {
+                    @Override
+                    public int compare(Recipe a, Recipe b) {
+                        return String.CASE_INSENSITIVE_ORDER.compare(
+                                a.getTitle(),
+                                b.getTitle()
+                        );
+                    }
+                });
+            case 2:
+                Collections.sort(recipes, new Comparator<Recipe>() {
+                    @Override
+                    public int compare(Recipe a, Recipe b) {
+                        return (int)(b.getRating() - a.getRating());
+                    }
+                });
         }
     }
 
     private void setupAdapter() {
         Cookbook cookbook = Cookbook.getInstance(getActivity());
         List<Recipe> recipes = cookbook.getRecipes();
-        Collections.sort(recipes, new Comparator<Recipe>() {
-            @Override
-            public int compare(Recipe a, Recipe b) {
-                return String.CASE_INSENSITIVE_ORDER.compare(
-                        a.getTitle(),
-                        b.getTitle()
-                );
-            }
-        });
         mAdapter = new RecipeAdapter(recipes);
         mRecipeRecyclerView.setAdapter(mAdapter);
     }
@@ -143,9 +164,6 @@ public class RecipeListFragment extends Fragment {
     }
 
     private void updateUI() {
-        Cookbook cookbook = Cookbook.getInstance(getActivity());
-        List<Recipe> recipes = cookbook.getRecipes();
-
         setupAdapter();
         updateSubtitle();
     }
