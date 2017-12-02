@@ -54,4 +54,8 @@ public class Recipe {
     public void addIngredient(Ingredient ingredient) {
         mIngredients.add(ingredient);
     }
+
+    public String getPhotoFileName() {
+        return "IMG_" + getId().toString() + ".jpg";
+    }
 }
