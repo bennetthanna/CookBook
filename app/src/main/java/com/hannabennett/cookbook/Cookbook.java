@@ -2,6 +2,7 @@ package com.hannabennett.cookbook;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class Cookbook {
     private static Cookbook sCookbook;
     private List<Recipe> mRecipes;
+    private Context mContext;
 
     public static Cookbook getInstance(Context context) {
         if (sCookbook == null) {
@@ -22,6 +24,7 @@ public class Cookbook {
     }
 
     private Cookbook(Context context) {
+        mContext = context.getApplicationContext();
         mRecipes = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Recipe recipe = new Recipe();
@@ -57,4 +60,8 @@ public class Cookbook {
         return null;
     }
 
+    public File getPhotoFile(Recipe recipe) {
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, recipe.getPhotoFileName());
+    }
 }
