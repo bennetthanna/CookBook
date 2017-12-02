@@ -32,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,9 +47,11 @@ import static android.widget.AdapterView.*;
 public class RecipeFragment extends Fragment {
     private static final String ARG_RECIPE_ID = "recipe_id";
     private static final int REQUEST_DECISION = 0;
+    private static final int REQUEST_PHOTO = 1;
     private static final String DIALOG_DELETE_RECIPE = "DialogDeleteRecipe";
 
     private Recipe mRecipe;
+    private File mPhotoFile;
     private LinearLayout mLayout;
     private EditText mTitleField;
     private EditText mIngredientField;
@@ -76,6 +79,7 @@ public class RecipeFragment extends Fragment {
         setHasOptionsMenu(true);
         UUID recipeId = (UUID) getArguments().getSerializable(ARG_RECIPE_ID);
         mRecipe = Cookbook.getInstance(getActivity()).getRecipe(recipeId);
+        mPhotoFile = Cookbook.getInstance(getActivity()).getPhotoFile(mRecipe);
     }
 
     @Override
