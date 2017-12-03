@@ -138,6 +138,12 @@ public class RecipeFragment extends Fragment {
             Recipe recipe = cookbook.getRecipe(mRecipe.getId());
             cookbook.deleteRecipe(recipe);
             getActivity().finish();
+        } else if (requestCode == REQUEST_PHOTO) {
+            Uri uri = FileProvider.getUriForFile(getActivity(), "com.hannabennett.cookbook.fileprovider",
+                    mPhotoFile);
+            getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            updateCrime();
+            updatePhotoView();
         }
     }
 
