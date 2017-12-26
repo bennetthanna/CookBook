@@ -43,4 +43,6 @@
     <string name="sort_list">Sort List</string>
     <string name="sort_alphabetically">Sort Alphabetically</string>
     <string name="sort_rating">Sort By Rating</string>
+    <string name="search">Search</string>
+    <string name="clear_search">Clear Search</string>
 </resources>

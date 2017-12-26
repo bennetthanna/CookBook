@@ -142,8 +142,8 @@ public class RecipeFragment extends Fragment {
             Uri uri = FileProvider.getUriForFile(getActivity(), "com.hannabennett.cookbook.fileprovider",
                     mPhotoFile);
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            updateRecipe();
-            updatePhotoView();
+//            updateRecipe();
+//            updatePhotoView();
         }
     }
 
